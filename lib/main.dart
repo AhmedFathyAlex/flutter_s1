@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_s1/screens/counter.dart';
 import 'package:flutter_s1/screens/flag.dart';
 import 'package:flutter_s1/screens/home.dart';
 import 'package:flutter_s1/screens/signin.dart';
@@ -19,9 +20,10 @@ class MainApp extends StatelessWidget {
         '/signup' : (context) => Signup(),
         '/signin' : (context) => Signin(),
         '/flag' : (context) => Flag(),
+        '/counter' : (context) => Counter(),
       },
       debugShowCheckedModeBanner: false,
-      initialRoute: '/flag',
+      initialRoute: '/counter',
     );
   }
 }
@@ -46,4 +48,6 @@ class MainApp extends StatelessWidget {
 // Text Button
 // Text Form Field
 // Global Key
+// Expanded 
+// Container
 
