@@ -20,4 +20,10 @@ class AppStyles {
     fontWeight: FontWeight.w600,
     color: AppColors.labelTextColor,
   );
+
+     static final numberTextStyle = GoogleFonts.inter(
+    fontSize: 40,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+  );
 }
