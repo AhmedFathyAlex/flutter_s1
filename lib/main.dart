@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_s1/screens/counter.dart';
-import 'package:flutter_s1/screens/flag.dart';
-import 'package:flutter_s1/screens/home.dart';
-import 'package:flutter_s1/screens/signin.dart';
-import 'package:flutter_s1/screens/signup.dart';
+import 'package:flutter_s1/bmi/screens/bmi_screen.dart';
 
 void main() {
   runApp(const MainApp());
@@ -15,15 +11,15 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      routes: {
-        '/home' : (context) => Home(),
-        '/signup' : (context) => Signup(),
-        '/signin' : (context) => Signin(),
-        '/flag' : (context) => Flag(),
-        '/counter' : (context) => Counter(),
-      },
+      // routes: {
+      //   '/home' : (context) => Home(),
+      //   '/signup' : (context) => Signup(),
+      //   '/signin' : (context) => Signin(),
+      //   '/flag' : (context) => Flag(),
+      //   '/counter' : (context) => Counter(),
+      // },
       debugShowCheckedModeBanner: false,
-      initialRoute: '/counter',
+      home: BmiScreen(),
     );
   }
 }
