@@ -17,6 +17,7 @@ class _BmiScreenState extends State<BmiScreen> {
   bool isMale = false;
   int age = 20;
   int weight = 60;
+  int height = 140;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -39,7 +40,6 @@ class _BmiScreenState extends State<BmiScreen> {
                       children: [
                         Icon(Icons.male, size: 100, color: Colors.white),
                         Text('MALE', style: AppStyles.labelTextStyle),
-                    
                       ],
                     ),
                   ),
@@ -60,53 +60,102 @@ class _BmiScreenState extends State<BmiScreen> {
                 ],
               ),
             ),
-            CustomContainer(),
+            CustomContainer(
+              child: Column(
+                children: [
+                  Text('HEIGHT', style: AppStyles.labelTextStyle),
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: '$height',
+                          style: AppStyles.numberTextStyle,
+                        ),
+                        TextSpan(
+                          text: 'cm',
+                          style: AppStyles.subtitleTextStyle,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Slider(
+                    divisions: 10,
+                    value: height.toDouble(),
+                    onChanged: (newValue) {
+                      setState(() {
+                        height = newValue.round();
+                      });
+                    },
+                    min: 140,
+                    max: 240,
+                    activeColor: AppColors.pink,
+                  ),
+                ],
+              ),
+            ),
             Expanded(
-              child: Row(children: [CustomContainer(
-                child: Column(
-                  children: [
-                    Text('WEIGHT',style: AppStyles.labelTextStyle,),
-                    Text('$weight', style: AppStyles.numberTextStyle,),
+              child: Row(
+                children: [
+                  CustomContainer(
+                    child: Column(
+                      children: [
+                        Text('WEIGHT', style: AppStyles.labelTextStyle),
+                        Text('$weight', style: AppStyles.numberTextStyle),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            RoundButton(onClick: (){
-                              setState(() {
-                                weight--;
-                              });
-                            }, icon: Icons.remove),
-                            RoundButton(onClick: (){
-                              setState(() {
-                                weight++;
-                              });
-                            },icon:Icons.add),
+                            RoundButton(
+                              onClick: () {
+                                setState(() {
+                                  weight--;
+                                });
+                              },
+                              icon: Icons.remove,
+                            ),
+                            RoundButton(
+                              onClick: () {
+                                setState(() {
+                                  weight++;
+                                });
+                              },
+                              icon: Icons.add,
+                            ),
                           ],
-                        )
-                  ],
-                ),
-              ), CustomContainer(
-                  child: Column(
-                  children: [
-                    Text('AGE',style: AppStyles.labelTextStyle,),
-                    Text('$age', style: AppStyles.numberTextStyle,),
+                        ),
+                      ],
+                    ),
+                  ),
+                  CustomContainer(
+                    child: Column(
+                      children: [
+                        Text('AGE', style: AppStyles.labelTextStyle),
+                        Text('$age', style: AppStyles.numberTextStyle),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            RoundButton(onClick: (){
-                              setState(() {
-                                age--;
-                              });
-                            }, icon: Icons.remove),
-                            RoundButton(onClick: (){
-                              setState(() {
-                                age++;
-                              });
-                            },icon:Icons.add),
+                            RoundButton(
+                              onClick: () {
+                                setState(() {
+                                  age--;
+                                });
+                              },
+                              icon: Icons.remove,
+                            ),
+                            RoundButton(
+                              onClick: () {
+                                setState(() {
+                                  age++;
+                                });
+                              },
+                              icon: Icons.add,
+                            ),
                           ],
-                        )
-                  ],
-                ),
-              )]),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
             CustomButton(title: 'Calculate'),
           ],

@@ -26,4 +26,9 @@ class AppStyles {
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );
+  static final subtitleTextStyle = GoogleFonts.inter(
+    fontSize: 15,
+    fontWeight: FontWeight.w500,
+    color: Colors.white,
+  );
 }
