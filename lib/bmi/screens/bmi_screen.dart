@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_s1/bmi/app_colors.dart';
 import 'package:flutter_s1/bmi/app_styles.dart';
+import 'package:flutter_s1/bmi/screens/result_screen.dart';
 import 'package:flutter_s1/bmi/widgets/custom_appbar.dart';
 import 'package:flutter_s1/bmi/widgets/custom_button.dart';
 import 'package:flutter_s1/bmi/widgets/custom_container.dart';
@@ -79,7 +80,6 @@ class _BmiScreenState extends State<BmiScreen> {
                     ),
                   ),
                   Slider(
-                    divisions: 10,
                     value: height.toDouble(),
                     onChanged: (newValue) {
                       setState(() {
@@ -157,7 +157,24 @@ class _BmiScreenState extends State<BmiScreen> {
                 ],
               ),
             ),
-            CustomButton(title: 'Calculate'),
+            CustomButton(title: 'Calculate' , onClick: () {
+              double heightInMeter = height/100;
+              double bmi = weight / (heightInMeter * heightInMeter);
+              String message;
+
+              if(bmi < 18.5 ){
+                message = 'Underweight';
+              }else if (bmi <= 24.9){
+                message = 'Normal';
+              }
+              else{
+                message = 'OverWeight';
+              }
+
+              Navigator.push(context, MaterialPageRoute(builder: (context){
+                return ResultScreen(result: bmi,message: message,);
+              }));
+            },),
           ],
         ),
       ),

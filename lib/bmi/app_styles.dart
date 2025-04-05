@@ -31,4 +31,9 @@ class AppStyles {
     fontWeight: FontWeight.w500,
     color: Colors.white,
   );
+  static final resultTextStyle = GoogleFonts.inter(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: AppColors.green,
+  );
 }
