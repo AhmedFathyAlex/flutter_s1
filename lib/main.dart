@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_s1/bmi/screens/bmi_screen.dart';
+import 'package:flutter_s1/ecommerce/ecommerce_home.dart';
 
 void main() {
   runApp(const MainApp());
@@ -11,15 +11,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // routes: {
-      //   '/home' : (context) => Home(),
-      //   '/signup' : (context) => Signup(),
-      //   '/signin' : (context) => Signin(),
-      //   '/flag' : (context) => Flag(),
-      //   '/counter' : (context) => Counter(),
-      // },
       debugShowCheckedModeBanner: false,
-      home: BmiScreen(),
+      home: EcommerceHome(),
     );
   }
 }
