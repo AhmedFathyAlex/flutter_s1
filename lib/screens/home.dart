@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_s1/screens/signin.dart';
-
 class Home extends StatelessWidget {
   const Home({super.key});
 
