@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Counter extends StatefulWidget {
    Counter({super.key});
@@ -7,10 +8,17 @@ class Counter extends StatefulWidget {
   State<Counter> createState() => _CounterState();
 }
 
+
 class _CounterState extends State<Counter> {
   int counter = 0;
+   @override
+  void initState() {
+    super.initState();
+    getCounter();
+  }
 
-  @override
+  
+  @override 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Counter'),),
@@ -18,17 +26,42 @@ class _CounterState extends State<Counter> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(onPressed: (){}, child: Icon(Icons.remove)),
+            ElevatedButton(onPressed: () async {
+              
+              setState(() {
+                counter--;
+                saveNewCounter();
+              });
+            }, child: Icon(Icons.remove)),
             Padding(
               padding: const EdgeInsets.only(left: 20,right:10),
               child: Text('$counter',style: TextStyle(fontSize: 40),),
             ),
-            ElevatedButton(onPressed: (){}, child: Icon(Icons.add)),
+            ElevatedButton(onPressed: (){
+              setState(() {
+                counter++;
+                saveNewCounter();
+              });
+            }, child: Icon(Icons.add)),
           ],
         ),
       ),
     );
   }
+
+  saveNewCounter()async{
+  var sp = await SharedPreferences.getInstance();
+  sp.setInt('counter', counter);
+  }
+
+  getCounter()async{
+ var sp = await SharedPreferences.getInstance();
+  int count = sp.getInt('counter') ?? 0 ; 
+  setState(() {
+    counter = count;
+  });
+  }
+
 }
 
 

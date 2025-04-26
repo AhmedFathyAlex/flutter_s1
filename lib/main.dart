@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_s1/ecommerce/ui/screens/ecommerce_home.dart';
+import 'package:flutter_s1/screens/counter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main()async{
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MainApp());
 }
 
@@ -12,7 +14,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: EcommerceHome(),
+      home: Counter(),
     );
   }
 }
@@ -39,4 +41,6 @@ class MainApp extends StatelessWidget {
 // Global Key
 // Expanded 
 // Container
+// Data persistense 
+// 1- key : value  sharedprefs 
 
