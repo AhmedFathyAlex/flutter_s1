@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_s1/screens/home.dart';
+import 'package:flutter_s1/todo/ui/screens/all_tasks.dart';
 import 'package:flutter_s1/widgets/custom_text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -58,11 +59,11 @@ class Signin extends StatelessWidget {
                     var sp = await SharedPreferences.getInstance();
                     if (_formKey.currentState!.validate()) {
                       sp.setBool('isLoggedIn', true);
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return Home();
+                            return AllTasks();
                           },
                         ),
                       );

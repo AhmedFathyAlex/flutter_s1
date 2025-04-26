@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_s1/screens/home.dart';
 import 'package:flutter_s1/screens/signin.dart';
+import 'package:flutter_s1/todo/ui/screens/all_tasks.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main()async{
+   WidgetsFlutterBinding.ensureInitialized();
   var sp = await SharedPreferences.getInstance();
   var isLoggedIn = sp.getBool('isLoggedIn') ?? false; 
-
-  WidgetsFlutterBinding.ensureInitialized();
   runApp( MainApp(isLoggedIn: isLoggedIn,));
 }
 
@@ -19,7 +18,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:isLoggedIn ? Home() :  Signin(),
+      home:isLoggedIn ? AllTasks() :  Signin(),
     );
   }
 }
