@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_s1/screens/counter.dart';
+import 'package:flutter_s1/screens/home.dart';
+import 'package:flutter_s1/screens/signin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main()async{
+  var sp = await SharedPreferences.getInstance();
+  var isLoggedIn = sp.getBool('isLoggedIn') ?? false; 
+
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MainApp());
+  runApp( MainApp(isLoggedIn: isLoggedIn,));
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  const MainApp({super.key, required this.isLoggedIn});
+ final bool isLoggedIn;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Counter(),
+      home:isLoggedIn ? Home() :  Signin(),
     );
   }
 }
