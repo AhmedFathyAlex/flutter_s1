@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_s1/screens/signin.dart';
+import 'package:flutter_s1/todo/data/db_service.dart';
 import 'package:flutter_s1/todo/ui/screens/all_tasks.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main()async{
    WidgetsFlutterBinding.ensureInitialized();
   var sp = await SharedPreferences.getInstance();
+  DbService.initializeDB();
   var isLoggedIn = sp.getBool('isLoggedIn') ?? false; 
   runApp( MainApp(isLoggedIn: isLoggedIn,));
 }
