@@ -1,20 +1,42 @@
+
+import 'dart:developer';
+
+import 'package:flutter_s1/todo/data/task_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DbService {
- static late final Database myDb;
+ static late final Database myDb ;
+ static String tableName = 'Tasks';
+ static String titleCol = 'title';
+ static String descCol = 'desc';
+ static String dateCol = 'date';
+
 
 static initializeDB() async{
   myDb = await openDatabase('tasks.db', version: 1,
-    onCreate: (db, version) {
+    onCreate: (db, version) async {
       // call first time the db created
       // creat tables
-      print('Database Created');
+       await db.execute('CREATE TABLE $tableName (id INTEGER PRIMARY KEY, $titleCol TEXT, $descCol TEXT, $dateCol TEXT)');
     },
     onOpen: (db) {
-       print('Database Opened');
+      // retreive all data
     },
   );
  }
 
- 
+// insert new task 
+
+static Future<void> insertTask(TaskModel task)async{
+  log('insert task called');
+  int id = await myDb.rawInsert( 'INSERT INTO $tableName($titleCol, $descCol, $dateCol) VALUES("${task.title}","${task.desc}","${task.date}")');
+log('Row number $id added successfully');
+log('insert task ended');
+}
+// read all tasks
+
+// delete task 
+
+// edit task
+
 }

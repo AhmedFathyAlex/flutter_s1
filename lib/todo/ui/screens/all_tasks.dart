@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_s1/screens/signin.dart';
+import 'package:flutter_s1/todo/data/db_service.dart';
 import 'package:flutter_s1/todo/data/task_model.dart';
 import 'package:flutter_s1/todo/ui/widgets/task_card.dart';
 import 'package:flutter_s1/widgets/custom_text_field.dart';
@@ -66,13 +67,15 @@ class _AllTasksState extends State<AllTasks> {
                   String? title = titleC.text.isEmpty ? null : titleC.text;
                   String? desc = descC.text.isEmpty ? null : descC.text ;
                   String? date = dateC.text.isEmpty ? null : dateC.text;
+                  TaskModel model = TaskModel(title: title, desc: desc , date: date);
 
                   titleC.clear();
                   descC.clear();
                   dateC.clear();
                   setState(() {
-                     tasks.add(TaskModel(title: title, desc: desc , date: date));
+                     tasks.add(model);
                   });
+                  DbService.insertTask(model);
                   Navigator.pop(context);
                 }, child: Text('save'))
               ],
