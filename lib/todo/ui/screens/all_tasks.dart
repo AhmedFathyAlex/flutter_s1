@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_s1/screens/signin.dart';
 import 'package:flutter_s1/todo/data/task_model.dart';
 import 'package:flutter_s1/todo/ui/widgets/task_card.dart';
+import 'package:flutter_s1/widgets/custom_text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AllTasks extends StatefulWidget {
@@ -15,6 +16,8 @@ class AllTasks extends StatefulWidget {
 class _AllTasksState extends State<AllTasks> {
   List<TaskModel> tasks = [];
   final TextEditingController titleC = TextEditingController();
+  final TextEditingController dateC = TextEditingController();
+  final TextEditingController descC = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,15 +54,24 @@ class _AllTasksState extends State<AllTasks> {
         setState(() {
           showModalBottomSheet(context: context, builder: (context){
             return Container(width: double.infinity,
-            height: 200,
-            color: Colors.amber,child: Column(
+            color: Colors.amber,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                TextField(controller: titleC,),
+                CustomTextField(hint: 'title',controller: titleC,),
+                CustomTextField(hint: 'description',controller: descC,),
+                CustomTextField(hint: 'date',controller: dateC,),
+
                 ElevatedButton(onPressed: (){
-                  String title = titleC.text;
+                  String? title = titleC.text.isEmpty ? null : titleC.text;
+                  String? desc = descC.text.isEmpty ? null : descC.text ;
+                  String? date = dateC.text.isEmpty ? null : dateC.text;
+
                   titleC.clear();
+                  descC.clear();
+                  dateC.clear();
                   setState(() {
-                     tasks.add(TaskModel(title: title));
+                     tasks.add(TaskModel(title: title, desc: desc , date: date));
                   });
                   Navigator.pop(context);
                 }, child: Text('save'))
