@@ -56,7 +56,14 @@ class _AllTasksState extends State<AllTasks> {
           return TaskCard(taskModel: tasks[index] , 
           onDelete: () {
             _deleteTask(tasks[index]);
-          },);
+          },
+          onComplete: () {
+            _markAsDoneTask(tasks[index]);
+          },
+          onArchived: () {
+            _archiveTask(tasks[index]);
+          },
+          );
         }, 
         itemCount: tasks.length , ),
       ),
@@ -97,7 +104,7 @@ class _AllTasksState extends State<AllTasks> {
   }
 
   _fetchData()async{
-   tasks = await DbService.fetchTasks();
+   tasks = await DbService.fetchTodoTasks();
    setState(() {
      
    });
@@ -105,6 +112,16 @@ class _AllTasksState extends State<AllTasks> {
 
   _deleteTask(TaskModel task)async{
    await DbService.deleteTask(task);
+   _fetchData();
+  }
+
+  _markAsDoneTask(TaskModel task)async{
+   await DbService.doneTask(task);
+   _fetchData();
+  }
+
+  _archiveTask(TaskModel task)async{
+   await DbService.archiveTask(task);
    _fetchData();
   }
 }

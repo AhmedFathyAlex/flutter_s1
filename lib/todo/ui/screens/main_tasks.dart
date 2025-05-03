@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_s1/todo/ui/screens/all_tasks.dart';
+import 'package:flutter_s1/todo/ui/screens/archive_tasks.dart';
+import 'package:flutter_s1/todo/ui/screens/done_tasks.dart';
 
 class MainTasks extends StatefulWidget {
   const MainTasks({super.key});
@@ -11,8 +13,8 @@ class MainTasks extends StatefulWidget {
 class _MainTasksState extends State<MainTasks> {
   List<Widget> pages = [
     AllTasks(), 
-    Text('Done'),
-    Text('Archived'),
+    DoneTasks(),
+   ArchivedTasks(),
   ]; 
 
   int index = 0; 
