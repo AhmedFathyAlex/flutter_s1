@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_s1/screens/signin.dart';
+import 'package:flutter_s1/counter/counter_provider.dart';
+import 'package:flutter_s1/counter/main_counter.dart';
 import 'package:flutter_s1/todo/data/db_service.dart';
 import 'package:flutter_s1/todo/ui/screens/all_tasks.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main()async{
@@ -18,9 +20,12 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home:isLoggedIn ? AllTasks() :  Signin(),
+    return ChangeNotifierProvider(
+      create: (context) => CounterProvider(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: AllTasks()
+      ),
     );
   }
 }

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_s1/screens/signin.dart';
 import 'package:flutter_s1/todo/data/db_service.dart';
@@ -16,16 +15,17 @@ class AllTasks extends StatefulWidget {
 
 class _AllTasksState extends State<AllTasks> {
   List<TaskModel> tasks = [];
+
   final TextEditingController titleC = TextEditingController();
   final TextEditingController dateC = TextEditingController();
   final TextEditingController descC = TextEditingController();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _fetchData();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +53,8 @@ class _AllTasksState extends State<AllTasks> {
         padding: const EdgeInsets.all(10.0),
         child: ListView.builder(
           itemBuilder: (context,index){
-          return TaskCard(taskModel: tasks[index] , onDelete: () {
+          return TaskCard(taskModel: tasks[index] , 
+          onDelete: () {
             _deleteTask(tasks[index]);
           },);
         }, 
