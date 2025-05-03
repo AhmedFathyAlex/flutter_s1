@@ -3,6 +3,7 @@ import 'package:flutter_s1/counter/counter_provider.dart';
 import 'package:flutter_s1/counter/main_counter.dart';
 import 'package:flutter_s1/todo/data/db_service.dart';
 import 'package:flutter_s1/todo/ui/screens/all_tasks.dart';
+import 'package:flutter_s1/todo/ui/screens/main_tasks.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,7 +25,7 @@ class MainApp extends StatelessWidget {
       create: (context) => CounterProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: AllTasks()
+        home: MainTasks()
       ),
     );
   }
