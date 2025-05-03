@@ -35,7 +35,26 @@ log('insert task ended');
 }
 // read all tasks
 
+static Future<List<TaskModel>> fetchTasks() async {
+  List<TaskModel> tasks = [];
+
+  var tasksRawData = await myDb.rawQuery('SELECT * FROM $tableName');
+
+  for(var taskMap in tasksRawData){
+    var model = TaskModel.fromJson(taskMap);
+    tasks.add(model);
+  }
+
+  log(tasksRawData.toString());
+  return tasks;
+}
+
 // delete task 
+
+static Future<void> deleteTask(TaskModel task)async{
+ var affectedRows = await myDb.rawDelete('DELETE FROM $tableName WHERE id = ${task.id}');
+ log('Number of affected rows after delete $affectedRows');
+}
 
 // edit task
 

@@ -19,6 +19,13 @@ class _AllTasksState extends State<AllTasks> {
   final TextEditingController titleC = TextEditingController();
   final TextEditingController dateC = TextEditingController();
   final TextEditingController descC = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _fetchData();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +53,9 @@ class _AllTasksState extends State<AllTasks> {
         padding: const EdgeInsets.all(10.0),
         child: ListView.builder(
           itemBuilder: (context,index){
-          return TaskCard(taskModel: tasks[index]);
+          return TaskCard(taskModel: tasks[index] , onDelete: () {
+            _deleteTask(tasks[index]);
+          },);
         }, 
         itemCount: tasks.length , ),
       ),
@@ -84,5 +93,17 @@ class _AllTasksState extends State<AllTasks> {
         });
       } , child: Icon(Icons.add),),
     );
+  }
+
+  _fetchData()async{
+   tasks = await DbService.fetchTasks();
+   setState(() {
+     
+   });
+  }
+
+  _deleteTask(TaskModel task)async{
+   await DbService.deleteTask(task);
+   _fetchData();
   }
 }

@@ -9,5 +9,11 @@ class TaskModel {
    this.desc , 
    this.id});
 
-
+  TaskModel.fromJson(Map map){
+    id = map['id'];
+    title = map['title'];
+    desc = map['desc'];
+    date = map['date'];
+  }
+  
 }
