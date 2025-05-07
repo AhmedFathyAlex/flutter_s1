@@ -1,31 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_s1/screens/signin.dart';
-import 'package:flutter_s1/todo/data/db_service.dart';
 import 'package:flutter_s1/todo/data/task_model.dart';
+import 'package:flutter_s1/todo/ui/tasks_provider.dart';
 import 'package:flutter_s1/todo/ui/widgets/task_card.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class DoneTasks extends StatefulWidget {
+class DoneTasks extends StatelessWidget {
   const DoneTasks({super.key});
-
-  @override
-  State<DoneTasks> createState() => _DoneTasksState();
-}
-
-class _DoneTasksState extends State<DoneTasks> {
-  List<TaskModel> tasks = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchData();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Todo'),
+        title: Text('Done'),
         actions: [
           IconButton(
             onPressed: () async {
@@ -46,20 +34,23 @@ class _DoneTasksState extends State<DoneTasks> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: ListView.builder(
-          itemBuilder: (context,index){
-          return TaskCard(taskModel: tasks[index], 
-          );
-        }, 
-        itemCount: tasks.length , ),
+        child:  Consumer<TasksProvider>(
+          builder: (context, value, child) {
+            
+            return ListView.builder(
+              itemBuilder: (context, index) {
+                if(value.tasks[index].status != TaskStatus.done){
+                return SizedBox.shrink();
+              }
+              
+                return TaskCard(taskModel: value.tasks[index]);
+              },
+              itemCount: value.tasks.length,
+            );
+          },
+        ),
       ),
     );
   }
 
-  _fetchData()async{
-   tasks = await DbService.instance.fetchDoneTasks();
-   setState(() {
-     
-   });
-  }
 }

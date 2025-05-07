@@ -2,29 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_s1/screens/signin.dart';
 import 'package:flutter_s1/todo/data/db_service.dart';
 import 'package:flutter_s1/todo/data/task_model.dart';
+import 'package:flutter_s1/todo/ui/tasks_provider.dart';
 import 'package:flutter_s1/todo/ui/widgets/task_card.dart';
 import 'package:flutter_s1/widgets/custom_text_field.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AllTasks extends StatefulWidget {
-  const AllTasks({super.key});
-
-  @override
-  State<AllTasks> createState() => _AllTasksState();
-}
-
-class _AllTasksState extends State<AllTasks> {
-  List<TaskModel> tasks = [];
+class AllTasks extends StatelessWidget {
+   AllTasks({super.key});
 
   final TextEditingController titleC = TextEditingController();
   final TextEditingController dateC = TextEditingController();
   final TextEditingController descC = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchData();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,25 +40,33 @@ class _AllTasksState extends State<AllTasks> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: ListView.builder(
-          itemBuilder: (context,index){
-          return TaskCard(taskModel: tasks[index] , 
-          onDelete: () {
-            _deleteTask(tasks[index]);
+        child: Consumer<TasksProvider>(
+          builder: (context, value, child) {
+            return  ListView.builder(
+            itemBuilder: (context,index){
+              if(value.tasks[index].status != TaskStatus.todo){
+                return SizedBox.shrink();
+              }
+
+            return TaskCard(taskModel: value.tasks[index], 
+            onDelete: () {
+               context.read<TasksProvider>().deleteTask(value.tasks[index]);
+            },
+            onComplete: () {
+             context.read<TasksProvider>().markAsDone(value.tasks[index]);
+            },
+            onArchived: () {
+             context.read<TasksProvider>().markAsArchive(value.tasks[index]);
+            },
+            );
+          }, 
+          itemCount: value.tasks.length);
           },
-          onComplete: () {
-            _markAsDoneTask(tasks[index]);
-          },
-          onArchived: () {
-            _archiveTask(tasks[index]);
-          },
-          );
-        }, 
-        itemCount: tasks.length , ),
+         
+        ),
       ),
 
       floatingActionButton: FloatingActionButton(onPressed: (){
-        setState(() {
           showModalBottomSheet(context: context, builder: (context){
             return Container(width: double.infinity,
             color: Colors.amber,
@@ -89,39 +86,15 @@ class _AllTasksState extends State<AllTasks> {
                   titleC.clear();
                   descC.clear();
                   dateC.clear();
-                  setState(() {
-                     tasks.add(model);
-                  });
-                  DbService.instance.insertTask(model);
+
+                  context.read<TasksProvider>().addTask(model);
+
                   Navigator.pop(context);
                 }, child: Text('save'))
               ],
             ),);
           });
-        });
       } , child: Icon(Icons.add),),
     );
-  }
-
-  _fetchData()async{
-   tasks = await DbService.instance.fetchTodoTasks();
-   setState(() {
-     
-   });
-  }
-
-  _deleteTask(TaskModel task)async{
-   await DbService.instance.deleteTask(task);
-   _fetchData();
-  }
-
-  _markAsDoneTask(TaskModel task)async{
-   await DbService.instance.doneTask(task);
-   _fetchData();
-  }
-
-  _archiveTask(TaskModel task)async{
-   await DbService.instance.archiveTask(task);
-   _fetchData();
   }
 }
