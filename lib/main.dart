@@ -8,9 +8,12 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main()async{
+  
    WidgetsFlutterBinding.ensureInitialized();
   var sp = await SharedPreferences.getInstance();
-   await DbService.initializeDB();
+
+   await DbService.instance.initializeDB();
+   
   var isLoggedIn = sp.getBool('isLoggedIn') ?? false; 
   runApp( MainApp(isLoggedIn: isLoggedIn,));
 }

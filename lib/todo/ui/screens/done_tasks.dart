@@ -57,7 +57,7 @@ class _DoneTasksState extends State<DoneTasks> {
   }
 
   _fetchData()async{
-   tasks = await DbService.fetchDoneTasks();
+   tasks = await DbService.instance.fetchDoneTasks();
    setState(() {
      
    });

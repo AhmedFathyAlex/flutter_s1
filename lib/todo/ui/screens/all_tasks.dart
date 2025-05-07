@@ -92,7 +92,7 @@ class _AllTasksState extends State<AllTasks> {
                   setState(() {
                      tasks.add(model);
                   });
-                  DbService.insertTask(model);
+                  DbService.instance.insertTask(model);
                   Navigator.pop(context);
                 }, child: Text('save'))
               ],
@@ -104,24 +104,24 @@ class _AllTasksState extends State<AllTasks> {
   }
 
   _fetchData()async{
-   tasks = await DbService.fetchTodoTasks();
+   tasks = await DbService.instance.fetchTodoTasks();
    setState(() {
      
    });
   }
 
   _deleteTask(TaskModel task)async{
-   await DbService.deleteTask(task);
+   await DbService.instance.deleteTask(task);
    _fetchData();
   }
 
   _markAsDoneTask(TaskModel task)async{
-   await DbService.doneTask(task);
+   await DbService.instance.doneTask(task);
    _fetchData();
   }
 
   _archiveTask(TaskModel task)async{
-   await DbService.archiveTask(task);
+   await DbService.instance.archiveTask(task);
    _fetchData();
   }
 }
