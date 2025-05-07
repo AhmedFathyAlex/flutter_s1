@@ -57,7 +57,7 @@ class _ArchivedTasksState extends State<ArchivedTasks> {
   }
 
   _fetchData()async{
-   tasks = await DbService.fetchArchivedTasks();
+   tasks = await DbService.instance.fetchArchivedTasks();
    setState(() {
      
    });

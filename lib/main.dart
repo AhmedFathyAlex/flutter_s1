@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_s1/counter/counter_provider.dart';
-import 'package:flutter_s1/counter/main_counter.dart';
 import 'package:flutter_s1/todo/data/db_service.dart';
-import 'package:flutter_s1/todo/ui/screens/all_tasks.dart';
 import 'package:flutter_s1/todo/ui/screens/main_tasks.dart';
+import 'package:flutter_s1/todo/ui/tasks_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main()async{
+  
    WidgetsFlutterBinding.ensureInitialized();
   var sp = await SharedPreferences.getInstance();
-   await DbService.initializeDB();
+
+   await DbService.instance.initializeDB();
+
   var isLoggedIn = sp.getBool('isLoggedIn') ?? false; 
   runApp( MainApp(isLoggedIn: isLoggedIn,));
 }
@@ -22,7 +24,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => CounterProvider(),
+      create: (context) => TasksProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: MainTasks()
